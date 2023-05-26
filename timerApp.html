@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Countdown Timer</title>
+</head>
+<body>
+    <h1>Countdown Timer</h1>
+    <span id="timer"></span>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScNODgrG5ZWah0uAd0ALfgvsRML0mFjd28ypJnW6ih7w5Xvew/viewform?usp=sf_link" width="100%" height="800" frameborder="0" marginheight="0" marginwidth="0">Loading...</iframe>
+</body>
+  
+</html>
+
+<style>
+    #timer {
+      font-size: 48px;
+      text-align: center;
+    }
+</style>
+
+<script>
+    function startTimer(duration, display) {
+      var timer = duration, minutes, seconds;
+      var intervalId = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
+    
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+    
+        display.textContent = minutes + ":" + seconds;
+    
+        if (timer <= 0) {
+          clearInterval(intervalId);
+          submitForm();
+        } else if (timer === 120) {
+          showNotification();
+        }
+    
+        timer--;
+      }, 1000);
+    }
+    
+    window.onload = function () {
+      var countdownMinutes = 3; // Adjust the countdown time in minutes
+      var display = document.querySelector('#timer');
+      startTimer(countdownMinutes * 60, display);
+    };
+</script>
+    
+
+<script>
+    function showNotification() {
+      alert("Only 2 minutes left to complete the assessment!");
+    }
+</script>
+
+<script>
+    function submitForm() {
+      var formId = '1FAIpQLScNODgrG5ZWah0uAd0ALfgvsRML0mFjd28ypJnW6ih7w5Xvew'; // Replace with your Google Form ID
+      var apiKey = 'AIzaSyAV-bsxhQmvbZmbqcPi_O-odm0dazVFQp0'; // Replace with your API key
+    
+      var url = 'https://docs.google.com/forms/d/' + formId + '/formResponse?apiKey=' + apiKey;
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', url, true);
+  xhr.send();
+    }
+</script>
